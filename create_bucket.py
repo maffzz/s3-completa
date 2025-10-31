@@ -26,13 +26,17 @@ def lambda_handler(event, context):
 
     try:
         params = {"Bucket": bucket}
+
         if region != "us-east-1":
             params["CreateBucketConfiguration"] = {"LocationConstraint": region}
+
         s3.create_bucket(**params)
+
         return {
             "statusCode": 200,
-            "body": json.dumps({"ok": True, "message": f"Bucket '{bucket}' creado en {region}"})
+            "body": json.dumps({"ok": True, "message": f"Bucket '{bucket}' creado en región {region}"})
         }
+
     except Exception as e:
         return {
             "statusCode": 500,
